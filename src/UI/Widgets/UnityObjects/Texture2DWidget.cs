@@ -22,7 +22,7 @@ namespace UnityExplorer.UI.Widgets
         Image image;
         LayoutElement imageLayout;
 
-        private static Texture2D CopyTextureRGBA32Fallback(Texture texture, Rect textureRect)
+        private static Texture2D CopyTextureARGB32Fallback(Texture texture, Rect textureRect)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace UnityExplorer.UI.Widgets
                     texture = sprite.texture;
                 else
                 {
-                    texture = CopyTextureRGBA32Fallback(sprite.texture, sprite.textureRect);
+                    texture = CopyTextureARGB32Fallback(sprite.texture, sprite.textureRect);
                     shouldDestroyTexture = true;
                 }
             }
@@ -62,7 +62,7 @@ namespace UnityExplorer.UI.Widgets
                     texture = image.sprite.texture;
                 else
                 {
-                    texture = CopyTextureRGBA32Fallback(image.sprite.texture, image.sprite.textureRect);
+                    texture = CopyTextureARGB32Fallback(image.sprite.texture, image.sprite.textureRect);
                     shouldDestroyTexture = true;
                 }
             }
