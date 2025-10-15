@@ -22,6 +22,21 @@ namespace UnityExplorer.UI.Widgets
         Image image;
         LayoutElement imageLayout;
 
+        private static Texture2D CopyTextureRGBA32Fallback(Texture texture, Rect textureRect)
+        {
+            try
+            {
+                return TextureHelper.CopyTexture(texture, textureRect);
+            }
+            catch (Exception)
+            {
+                if (texture is Texture2D texture2d)
+                    return TextureHelper.CopyToARGB32(texture2d, textureRect);
+            }
+
+            return null;
+        }
+
         public override void OnBorrowed(object target, Type targetType, ReflectionInspector inspector)
         {
             base.OnBorrowed(target, targetType, inspector);
@@ -37,7 +52,7 @@ namespace UnityExplorer.UI.Widgets
                     texture = sprite.texture;
                 else
                 {
-                    texture = TextureHelper.CopyTexture(sprite.texture, sprite.textureRect);
+                    texture = CopyTextureRGBA32Fallback(sprite.texture, sprite.textureRect);
                     shouldDestroyTexture = true;
                 }
             }
@@ -47,7 +62,7 @@ namespace UnityExplorer.UI.Widgets
                     texture = image.sprite.texture;
                 else
                 {
-                    texture = TextureHelper.CopyTexture(image.sprite.texture, image.sprite.textureRect);
+                    texture = CopyTextureRGBA32Fallback(image.sprite.texture, image.sprite.textureRect);
                     shouldDestroyTexture = true;
                 }
             }
